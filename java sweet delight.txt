@@ -1,0 +1,45 @@
+// Toggle menu untuk tampilan mobile
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+});
+
+// Smooth scroll untuk navigasi
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if(targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if(targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+            
+            // Tutup menu mobile setelah klik
+            document.querySelector('.nav-links').classList.remove('active');
+        }
+    });
+});
+
+// Set tanggal minimal untuk form pemesanan (2 hari dari sekarang)
+const today = new Date();
+const minDate = new Date(today);
+minDate.setDate(today.getDate() + 2);
+
+const formattedMinDate = minDate.toISOString().split('T')[0];
+document.getElementById('date').min = formattedMinDate;
+
+// Tampilkan atau sembunyikan pilihan cupcake berdasarkan jenis produk
+document.getElementById('product-type').addEventListener('change', function() {
+    const cupcakeSelect = document.getElementById('cupcake-type');
+    if (this.value === 'cupcake' || this.value === 'both') {
+        cupcakeSelect.style.display = 'block';
+        cupcakeSelect.previousElementSibling.style.display = 'block';
+    } else {
+        cupcakeSelect.style.display = 'none';
+        cupcakeSelect.previousElementSibling.style.display = 'none';
+    }
+});
